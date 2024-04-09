@@ -1,11 +1,13 @@
-import { useState } from 'react'
 import './App.css'
+
+import Navbar from './components/Navbar';
+import AuthForm from './components/AuthForm';
 
 function App() {
   return (
     <>
-      <h1>Maitree</h1>
-      <h1>Manish Choudhary</h1>
+      <Navbar></Navbar>
+      <AuthForm></AuthForm>
     </>
   )
 }
