@@ -12,6 +12,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import ExpenseForm from './ExpenseForm';
 
 const defaultTheme = createTheme();
 
@@ -94,17 +95,12 @@ function AuthForm() {
               id="password"
               autoComplete={isLogin ? 'current-password' : 'new-password'}
             />
-            {!isLogin && (
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
-              />
-            )}
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              
             >
               {isLogin ? 'Sign In' : 'Sign Up'}
             </Button>
