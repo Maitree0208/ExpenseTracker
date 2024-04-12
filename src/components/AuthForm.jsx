@@ -13,23 +13,48 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import ExpenseForm from './ExpenseForm';
+import { useNavigate } from "react-router-dom";
 
 const defaultTheme = createTheme();
 
-function AuthForm() {
+function AuthForm({ onLoginSuccess }) {
   const [isLogin, setIsLogin] = useState(true); // State to track whether to show login or signup form
 
   const handleToggleForm = () => {
     setIsLogin(!isLogin); // Toggle between login and signup form
   };
 
-  const handleSubmit = (event) => {
+  const navigate = useNavigate();
+  
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    const formData = new FormData(event.currentTarget);
+    const data = Object.fromEntries(formData.entries());
+
+    const url = isLogin ? 'http://localhost:8000/login' : 'http://localhost:8000/signup';
+
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        const responseData = await response.json();
+        console.log('Authentication successful:', responseData);
+        onLoginSuccess(responseData.user);
+        navigate("/dashboard");
+      } else {
+        console.error('Authentication failed:', response.statusText);
+        // Handle authentication error (e.g., display error message to the user)
+      }
+    } catch (error) {
+      console.error('Error:', error.message);
+      // Handle network error or other errors
+    }
   };
 
   return (
@@ -42,7 +67,7 @@ function AuthForm() {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-          }}
+          }}   
         >
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
