@@ -6,11 +6,10 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import List_From from './List_From';
 import Button from '@mui/material/Button';
-import './ExpenseForm.css';
+import './ExpenseForm_Transfer.css';
 import List_Wallet from './List_Wallet';
 
-
-function ExpenseForm() {
+function ExpenseForm_Transfer() {
   const [open, setOpen] = useState(true);
 
   const handleClick = () => {
@@ -19,17 +18,22 @@ function ExpenseForm() {
 
   return (
     <List
-      className="ExpenseForm-container"
+      className="ExpenseForm_Transfer-container"
       component="nav"
       aria-labelledby="nested-list-subheader"
       subheader={
-        <ListSubheader component="div" id="nested-list-subheader" className="ExpenseForm-header">
+        <ListSubheader component="div" id="nested-list-subheader" className="ExpenseForm_Transfer-header">
           Expenses
         </ListSubheader>
       }
     >
       <ListItemButton>
         <ListItemText primary="From:" sx = {{pr: 5}}/>
+        <List_Wallet></List_Wallet>
+      </ListItemButton>
+
+      <ListItemButton>
+        <ListItemText primary="To:" sx = {{pr: 5}}/>
         <List_Wallet></List_Wallet>
       </ListItemButton>
         
@@ -39,16 +43,11 @@ function ExpenseForm() {
         <List_From />
       </ListItemButton>
 
-      {/* <ListItemButton>
-        <ListItemText primary="Date:" />
-        <List_Date></List_Date>
-      </ListItemButton> */}
-
-      <Button id = "ExpenseForm-button" variant="contained"  onClick={() => console.log("Add Transfer clicked")}>
-        Add Expense
+      <Button id = "ExpenseForm_Transfer-button" variant="contained"  onClick={() => console.log("Add Transfer clicked")}>
+        Add Transfer
       </Button>
     </List>
   );
 }
 
-export default ExpenseForm;
+export default ExpenseForm_Transfer;

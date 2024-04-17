@@ -3,8 +3,9 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import AuthForm from './components/AuthForm';
-import ExpenseForm from './components/ExpenseForm';
 import Dashboard from './components/Dashboard';
+import Report_Bar from './components/Report_Bar';
+
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -13,7 +14,7 @@ function App() {
   const handleLoginSuccess = (userData) => {
     setIsLoggedIn(true);
     setUser(userData);
-    console.log("manish ", userData);
+    console.log("Logged in", userData);
   };
 
   return (
@@ -22,6 +23,7 @@ function App() {
       <Routes>
         <Route path="/login" element={<AuthForm onLoginSuccess={handleLoginSuccess} />} />
         <Route path="/dashboard" element={isLoggedIn ? <Dashboard user={user} /> : <AuthForm onLoginSuccess={handleLoginSuccess} />} />
+        <Route path="/reports" element={<Report_Bar />} /> 
         <Route path="/" element={isLoggedIn ? <Dashboard user={user} /> : <AuthForm onLoginSuccess={handleLoginSuccess} />} />
       </Routes>
     </Router>

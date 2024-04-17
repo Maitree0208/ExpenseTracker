@@ -1,0 +1,32 @@
+/* ExpenseForm.css */
+.ExpenseForm_Transfer-container {
+    width: 50%;
+    max-width: 500px;
+    background-color: white;
+    border: 3px solid rgb(86, 86, 131);
+    transition: border-color 0.2s ease;
+    border-radius: 10px;
+    text-align: center;
+    overflow: hidden; 
+  }
+  
+  .ExpenseForm_Transfer-container:hover {
+    border-color:black;
+  }
+  
+  .ExpenseForm_Transfer-form {
+    padding: 60px;
+    
+  }
+
+  .ExpenseForm_Transfer-button {
+    padding-left: 10px;
+    background-color: white;
+    
+  }
+  
+  .ExpenseForm_Transfer-header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
