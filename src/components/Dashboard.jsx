@@ -1,11 +1,13 @@
+// Dashboard.js
 import React from 'react';
+import './Dashboard.css';
+import Tabs_Expense from './Tabs_Expense';
 
 function Dashboard({ user }) {
   return (
-    <div>
-      <h1>Welcome, {user.firstName} {user.lastName}</h1>
-      {/* Other dashboard content can go here */}
-      {/* <h1>Mayhiiiiii</h1> */}
+    <div className="Dashboard-container">
+      <h1 className="Dashboard-heading">Welcome, {user.firstName} {user.lastName}</h1>
+      <Tabs_Expense></Tabs_Expense>
     </div>
   );
 }

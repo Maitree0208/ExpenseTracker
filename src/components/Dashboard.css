@@ -1,0 +1,15 @@
+/* Dashboard.css */
+.Dashboard-container {
+    display: flex;
+    flex-direction: column; /* To stack the elements vertically */
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 20px; /* Add padding to create separation */
+  }
+  
+  .Dashboard-heading {
+    margin-top: 100px; /* Adjust as needed */
+    margin-bottom: 20px; /* Add margin-bottom to create space between heading and form */
+  }
+  
