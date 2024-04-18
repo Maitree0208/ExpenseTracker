@@ -19,16 +19,15 @@ const MenuProps = {
 };
 
 const names = [
-  'Oliver Hansen',
-  'Van Henry',
-  'April Tucker',
-  'Ralph Hubbard',
-  'Omar Alexander',
-  'Carlos Abbott',
-  'Miriam Wagner',
-  'Bradley Wilkerson',
-  'Virginia Andrews',
-  'Kelly Snyder',
+  'Groceries',
+  'Restaurant',
+  'Bills',
+  'Income tax',
+  'Shopping',
+  'Clothes',
+  'Travel',
+  'Social Security',
+  'Rent',
 ];
 
 function getStyles(name, personName, theme) {
@@ -40,7 +39,7 @@ function getStyles(name, personName, theme) {
   };
 }
 
-function List_Wallet() {
+function List_Note() {
   const theme = useTheme();
   const [personName, setPersonName] = React.useState('');
 
@@ -52,13 +51,13 @@ function List_Wallet() {
   return (
     <div>
       <FormControl sx={{ m: 1, width: 200 }}>
-        <InputLabel id="demo-simple-select-label">Wallet</InputLabel>
+        <InputLabel id="demo-simple-select-label">Note</InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           value={personName}
           onChange={handleChange}
-          input={<OutlinedInput label="Wallet" />}
+          input={<OutlinedInput label="Note" />}
           MenuProps={MenuProps}
         >
           {names.map((name) => (
@@ -76,4 +75,4 @@ function List_Wallet() {
   );
 }
 
-export default List_Wallet;
+export default List_Note;
