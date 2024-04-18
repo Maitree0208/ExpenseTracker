@@ -1,11 +1,11 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTheme } from '@mui/material/styles';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-
+import axios from 'axios';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -18,19 +18,6 @@ const MenuProps = {
   },
 };
 
-const names = [
-  'Oliver Hansen',
-  'Van Henry',
-  'April Tucker',
-  'Ralph Hubbard',
-  'Omar Alexander',
-  'Carlos Abbott',
-  'Miriam Wagner',
-  'Bradley Wilkerson',
-  'Virginia Andrews',
-  'Kelly Snyder',
-];
-
 function getStyles(name, personName, theme) {
   return {
     fontWeight:
@@ -42,7 +29,20 @@ function getStyles(name, personName, theme) {
 
 function List_Wallet() {
   const theme = useTheme();
-  const [personName, setPersonName] = React.useState('');
+  const [personName, setPersonName] = useState('');
+  const [walletNames, setWalletNames] = useState([]);
+
+  useEffect(() => {
+    // Fetch wallet names from backend API
+    axios.post('http://localhost:8000/wallet-names')
+      .then(response => {
+        const { walletNames } = response.data; // Destructure walletNames from response.data
+        setWalletNames(walletNames);
+      })
+      .catch(error => {
+        console.error('Error fetching wallet names:', error);
+      });
+  }, []);  // Empty dependency array ensures the effect runs only once on component mount
 
   const handleChange = (event) => {
     const { value } = event.target;
@@ -61,7 +61,7 @@ function List_Wallet() {
           input={<OutlinedInput label="Wallet" />}
           MenuProps={MenuProps}
         >
-          {names.map((name) => (
+          {walletNames.map((name) => (
             <MenuItem
               key={name}
               value={name}
