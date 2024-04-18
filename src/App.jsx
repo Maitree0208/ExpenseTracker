@@ -17,9 +17,14 @@ function App() {
     console.log("Logged in", userData);
   };
 
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setUser(null);
+  };
+
   return (
     <Router>
-      <Navbar isLoggedIn={isLoggedIn} />
+      <Navbar isLoggedIn={isLoggedIn} handleLogout={handleLogout}/>
       <Routes>
         <Route path="/login" element={<AuthForm onLoginSuccess={handleLoginSuccess} />} />
         <Route path="/dashboard" element={isLoggedIn ? <Dashboard user={user} /> : <AuthForm onLoginSuccess={handleLoginSuccess} />} />

@@ -17,7 +17,7 @@ import { Link } from 'react-router-dom';
 const pages = ['Reports', 'Accounts', 'Total'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-function Navbar() {
+function Navbar({ handleLogout }) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -35,6 +35,7 @@ function Navbar() {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+
   };
 
   return (
@@ -89,7 +90,7 @@ function Navbar() {
             onClose={handleCloseUserMenu}
           >
             {settings.map((setting) => (
-              <MenuItem key={setting} onClick={handleCloseUserMenu}>
+              <MenuItem key={setting} onClick={setting === 'Logout' ? handleLogout : handleCloseUserMenu}>
                 <Typography textAlign="center">{setting}</Typography>
               </MenuItem>
             ))}
