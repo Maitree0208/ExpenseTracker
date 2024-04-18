@@ -8,6 +8,8 @@ import List_From from './List_From';
 import Button from '@mui/material/Button';
 import './ExpenseForm.css';
 import List_Wallet from './List_Wallet';
+import List_Note from './List_Note';
+import List_Date from './List_Date';
 
 
 function ExpenseForm() {
@@ -39,10 +41,15 @@ function ExpenseForm() {
         <List_From />
       </ListItemButton>
 
-      {/* <ListItemButton>
+      <ListItemButton>
+        <ListItemText primary="Note:" sx = {{pr: 5}}/>
+        <List_Note></List_Note>
+      </ListItemButton>
+
+       <ListItemButton>
         <ListItemText primary="Date:" />
         <List_Date></List_Date>
-      </ListItemButton> */}
+    </ListItemButton> 
 
       <Button id = "ExpenseForm-button" variant="contained"  onClick={() => console.log("Add Transfer clicked")}>
         Add Expense
