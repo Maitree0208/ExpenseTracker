@@ -7,7 +7,7 @@ function Dashboard({ user }) {
   return (
     <div className="Dashboard-container">
       <h1 className="Dashboard-heading">Welcome, {user.firstName} {user.lastName}</h1>
-      <Tabs_Expense></Tabs_Expense>
+      <Tabs_Expense email={user.email}></Tabs_Expense>
     </div>
   );
 }
