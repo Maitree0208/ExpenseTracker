@@ -6,7 +6,7 @@ import ExpenseForm from './ExpenseForm'; // Import the ExpenseForm component
 import ExpenseForm_Transfer from './ExpenseForm_Transfer'; // Import the ExpenseForm_Transfer component
 import ExpenseForm_Income from './ExpenseForm_Income';
 
-function Tabs_Expense({email}) {
+function Tabs_Expense() {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -21,9 +21,9 @@ function Tabs_Expense({email}) {
         <Tab label="Income" />
       </Tabs>
       {/* Conditionally render the appropriate form component based on the selected tab */}
-      {value === 0 && <ExpenseForm email={email} />}
-      {value === 1 && <ExpenseForm_Transfer email={email} />}
-      {value === 2 && <ExpenseForm_Income email={email} />}
+      {value === 0 && <ExpenseForm />}
+      {value === 1 && <ExpenseForm_Transfer />}
+      {value === 2 && <ExpenseForm_Income />}
     </Box>
   );
 }
