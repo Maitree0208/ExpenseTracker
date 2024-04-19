@@ -1,11 +1,10 @@
-import * as React from 'react';
+import React from 'react';
 import { useTheme } from '@mui/material/styles';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -30,42 +29,23 @@ const names = [
   'Rent',
 ];
 
-function getStyles(name, personName, theme) {
-  return {
-    fontWeight:
-      personName.indexOf(name) === -1
-        ? theme.typography.fontWeightRegular
-        : theme.typography.fontWeightMedium,
-  };
-}
-
-function List_Note() {
+function List_Note({ value, onChange }) {
   const theme = useTheme();
-  const [personName, setPersonName] = React.useState('');
-
-  const handleChange = (event) => {
-    const { value } = event.target;
-    setPersonName(value);
-  };
 
   return (
     <div>
       <FormControl sx={{ m: 1, width: 200 }}>
-        <InputLabel id="demo-simple-select-label">Note</InputLabel>
+        <InputLabel id="note-select-label">Note</InputLabel>
         <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={personName}
-          onChange={handleChange}
+          labelId="note-select-label"
+          id="note-select"
+          value={value}
+          onChange={onChange}
           input={<OutlinedInput label="Note" />}
           MenuProps={MenuProps}
         >
           {names.map((name) => (
-            <MenuItem
-              key={name}
-              value={name}
-              style={getStyles(name, personName, theme)}
-            >
+            <MenuItem key={name} value={name}>
               {name}
             </MenuItem>
           ))}

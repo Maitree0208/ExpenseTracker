@@ -12,6 +12,7 @@ function App() {
   const [user, setUser] = useState(null);
 
   const handleLoginSuccess = (userData) => {
+    localStorage.setItem("email",userData.email);
     setIsLoggedIn(true);
     setUser(userData);
     console.log("Logged in", userData);
@@ -30,7 +31,7 @@ function App() {
         <Route path="/dashboard" element={isLoggedIn ? <Dashboard user={user} /> : <AuthForm onLoginSuccess={handleLoginSuccess} />} />
         <Route path="/reports" element={<Report_Bar />} /> 
         <Route path="/" element={isLoggedIn ? <Dashboard user={user} /> : <AuthForm onLoginSuccess={handleLoginSuccess} />} />
-        <Route path="/accounts" element={isLoggedIn ? <AddWalletComponent email={user.email}/> : <AddWalletComponent email={null}/>} /> 
+        <Route path="/accounts" element={isLoggedIn ? <AddWalletComponent email={user.email}/> : null} /> 
       </Routes>
     </Router>
   );
