@@ -11,14 +11,16 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const pages = ['Reports', 'Accounts', 'Total'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-function Navbar({ handleLogout }) {
+function Navbar({ handleLogout, isLoggedIn }) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+  const navigate = useNavigate();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -34,7 +36,20 @@ function Navbar({ handleLogout }) {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
 
+  const handleLogoClick = () => {
+    navigate("/");
+  }
+
+  const handleMenuItemClick = (setting) => {
+    if (setting === 'Dashboard') {
+      navigate("/dashboard");
+    } else if (setting === 'Logout') {
+      handleLogout();
+    } else {
+      handleCloseUserMenu();
+    }
   };
 
   return (
@@ -51,6 +66,7 @@ function Navbar({ handleLogout }) {
             <MenuIcon />
           </IconButton>
           <Typography
+            onClick={handleLogoClick}
             variant="h6"
             component="div"
             sx={{ mr: 2, display: { xs: 'none', md: 'block' } }}
@@ -68,32 +84,36 @@ function Navbar({ handleLogout }) {
             </Button>
           ))}
           <Box sx={{ flexGrow: 1 }} />
-          <Tooltip title="Open settings">
-            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              <Avatar alt="User Avatar" src="/path/to/avatar.jpg" />
-            </IconButton>
-          </Tooltip>
-          <Menu
-            id="menu-appbar"
-            anchorEl={anchorElUser}
-            anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-            keepMounted
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-            open={Boolean(anchorElUser)}
-            onClose={handleCloseUserMenu}
-          >
-            {settings.map((setting) => (
-              <MenuItem key={setting} onClick={setting === 'Logout' ? handleLogout : handleCloseUserMenu}>
-                <Typography textAlign="center">{setting}</Typography>
-              </MenuItem>
-            ))}
-          </Menu>
+          {isLoggedIn && ( // Conditionally render user settings only when user is logged in
+            <Tooltip title="Open settings">
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <Avatar alt="User Avatar" src="/path/to/avatar.jpg" />
+              </IconButton>
+            </Tooltip>
+          )}
+          {isLoggedIn && ( // Conditionally render user menu only when user is logged in
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+              {settings.map((setting) => (
+                <MenuItem key={setting} onClick={() => handleMenuItemClick(setting)}>
+                  <Typography textAlign="center">{setting}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          )}
         </Toolbar>
       </Container>
     </AppBar>

@@ -1,22 +1,26 @@
-import React, { useState, useEffect } from 'react';
-import ListSubheader from '@mui/material/ListSubheader';
-import List from '@mui/material/List';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
-import List_From from './List_From';
-import Button from '@mui/material/Button';
-import './ExpenseForm_Income.css';
-import List_Wallet from './List_Wallet';
-import List_Note from './List_Note';
-import List_Date from './List_Date';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import ListSubheader from "@mui/material/ListSubheader";
+import List from "@mui/material/List";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
+import Button from "@mui/material/Button";
+import "./ExpenseForm_Income.css";
+import List_Wallet from "./List_Wallet";
+import List_Note from "./List_Note";
+import axios from "axios";
+import TextField from "@mui/material/TextField";
+import Box from "@mui/material/Box";
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import dayjs from 'dayjs'
+
 
 function ExpenseForm_Income() {
-  const [to, setTo] = useState('');
+  const [to, setTo] = useState("");
   const [amount, setAmount] = useState(0);
-  const [note, setNote] = useState('');
-  const [date, setDate] = useState('');
-  const [walletNames, setWalletNames] = useState([]);
+  const [note, setNote] = useState("");
+  const [date, setDate] = useState("");
 
   const handleToChange = (event) => {
     setTo(event.target.value);
@@ -31,22 +35,8 @@ function ExpenseForm_Income() {
   };
 
   const handleDateChange = (event) => {
-    setDate(event.target.value);
-  };
-
-  useEffect(() => {
-    // Fetch wallet names from backend API
-    const email = localStorage.getItem("email");
-    axios.post('http://localhost:8000/wallet-names',{email : email})
-      .then(response => {
-        const { walletNames } = response.data; // Destructure walletNames from response.data
-        setWalletNames(walletNames);
-      })
-      .catch(error => {
-        console.error('Error fetching wallet names:', error);
-      });
-  }, []);
-
+    setDate(dayjs(event).format('MM/DD/YYYY'));
+  }
 
   const handleSubmit = () => {
     // Construct your payload
@@ -54,7 +44,7 @@ function ExpenseForm_Income() {
       to: to,
       amount: amount,
       note: note,
-      date: date
+      date: date,
     };
 
     console.log(formData);
@@ -86,8 +76,12 @@ function ExpenseForm_Income() {
       component="nav"
       aria-labelledby="nested-list-subheader"
       subheader={
-        <ListSubheader component="div" id="nested-list-subheader" className="ExpenseForm_Income-header">
-          Expenses
+        <ListSubheader
+          component="div"
+          id="nested-list-subheader"
+          className="ExpenseForm_Income-header"
+        >
+          Income
         </ListSubheader>
       }
     >
@@ -98,7 +92,34 @@ function ExpenseForm_Income() {
 
       <ListItemButton>
         <ListItemText primary="Amount:" />
-        <List_From onChange={handleAmountChange} />
+        <Box
+          component="form"
+          sx={{
+            "& .MuiTextField-root": { m: 1, width: "25ch" },
+          }}
+          noValidate
+          autoComplete="off"
+        >
+          <div>
+            <TextField
+              required
+              id="outlined-number"
+              label="Amount"
+              type="number"
+              onInput={(e) => {
+                const target = e.target;
+                target.value = e.target.value.replace(/[^0-9]/g, "");
+            }}
+              InputProps={{ inputProps: { 
+                min: 1,
+                type: "text",
+                pattern: "[0-9]*" 
+             
+             } }}
+              onChange={handleAmountChange} // Call handleInputChange on input change
+            />
+          </div>
+        </Box>
       </ListItemButton>
 
       <ListItemButton>
@@ -108,7 +129,24 @@ function ExpenseForm_Income() {
 
       <ListItemButton>
         <ListItemText primary="Date:" sx={{ pr: 5 }} />
-        <List_Date onChange={handleDateChange}></List_Date>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <Box
+            component="form"
+            sx={{
+              "& .MuiTextField-root": { m: 1, width: "25ch" },
+            }}
+            noValidate
+            autoComplete="off"
+          >
+            <div>
+              <DatePicker
+                label="Date"
+                format="YYYY-MM-DD"
+                onChange={handleDateChange}
+              />
+            </div>
+          </Box>
+        </LocalizationProvider>
       </ListItemButton>
 
       <Button

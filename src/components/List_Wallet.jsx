@@ -18,22 +18,32 @@ const MenuProps = {
   },
 };
 
-function List_Wallet({ value, onChange }) {
-  const theme = useTheme();
-  const [walletNames, setWalletNames] = useState([]);
+function List_Wallet({ onChange }) {
+  const [walletNames, setWalletNames] = useState(null); // Initialize with null
+  const [selectedName, setSelectedName] = useState('');
 
   useEffect(() => {
     // Fetch wallet names from backend API
     const email = localStorage.getItem("email");
     axios.post('http://localhost:8000/wallet-names', { email: email })
       .then(response => {
-        const { walletNames } = response.data; // Destructure walletNames from response.data
+        const { walletNames } = response.data;
         setWalletNames(walletNames);
       })
       .catch(error => {
         console.error('Error fetching wallet names:', error);
       });
   }, []);  // Empty dependency array ensures the effect runs only once on component mount
+
+  const handleChange = (event) => {
+    setSelectedName(event.target.value);
+    onChange(event); // Call the parent component's onChange function if needed
+  };
+
+  // Render nothing if walletNames is null
+  if (walletNames === null) {
+    return null;
+  }
 
   return (
     <div>
@@ -42,10 +52,10 @@ function List_Wallet({ value, onChange }) {
         <Select
           labelId="wallet-select-label"
           id="wallet-select"
-          value={value}
-          onChange={onChange}
+          onChange={handleChange}
           input={<OutlinedInput label="Wallet" />}
           MenuProps={MenuProps}
+          value={selectedName}// Set a default or placeholder value
         >
           {walletNames.map((name) => (
             <MenuItem key={name} value={name}>

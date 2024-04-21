@@ -4,10 +4,13 @@ import TextField from '@mui/material/TextField';
 
 function List_From({ onChange }) {
   const handleInputChange = (event) => {
-    // Check if event.target is defined
-    if (event.target) {
+    // Ensure event is defined and has a target property
+    if (event && event.target) {
+      // Extract the value directly from the event
+      const newValue = event.target.value;
+
       // Call the onChange handler with the new value
-      onChange(event.target.value);
+      onChange(newValue);
     }
   };
 
