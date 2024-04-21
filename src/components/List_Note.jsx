@@ -1,5 +1,4 @@
-import React from 'react';
-import { useTheme } from '@mui/material/styles';
+import React ,{useState} from 'react';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -29,8 +28,13 @@ const names = [
   'Rent',
 ];
 
-function List_Note({ value, onChange }) {
-  const theme = useTheme();
+function List_Note({ onChange }) {
+  const [selectedName, setSelectedName] = useState(''); // Set default value as empty string
+
+  const handleChange = (event) => {
+    setSelectedName(event.target.value);
+    onChange(event); // Call the parent component's onChange function if needed
+  };
 
   return (
     <div>
@@ -39,8 +43,8 @@ function List_Note({ value, onChange }) {
         <Select
           labelId="note-select-label"
           id="note-select"
-          value={value}
-          onChange={onChange}
+          value={selectedName}
+          onChange={handleChange}
           input={<OutlinedInput label="Note" />}
           MenuProps={MenuProps}
         >
