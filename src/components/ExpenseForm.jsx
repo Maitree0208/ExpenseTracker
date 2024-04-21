@@ -7,7 +7,6 @@ import Button from "@mui/material/Button";
 import "./ExpenseForm_Income.css";
 import List_Wallet from "./List_Wallet";
 import List_Note from "./List_Note";
-import axios from "axios";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -41,34 +40,37 @@ function ExpenseForm_Income() {
 
   const handleSubmit = () => {
     // Construct your payload
+    const email = localStorage.getItem("email");
     const formData = {
+      type: "expense",
       from: from,
       amount: amount,
       note: note,
       date: date,
+      email: email
     };
 
     console.log(formData);
     // Send the data to the backend
-    // fetch('your-backend-url', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify(formData),
-    // })
-    // .then(response => response.json())
-    // .then(data => {
-    //   console.log('Success:', data);
-    //   // Reset form fields if needed
-    //   setTo('');
-    //   setAmount('');
-    //   setNote('');
-    //   setDate('');
-    // })
-    // .catch((error) => {
-    //   console.error('Error:', error);
-    // });
+    fetch('http://localhost:8000/transactions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Success:', data);
+      // Reset form fields if needed
+      setFrom('');
+      setAmount(0);
+      setNote('');
+      setDate('');
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
   };
 
   return (

@@ -26,26 +26,8 @@ connect("mongodb://127.0.0.1:27017/ExpenseTracker")
       required: true
     },
     transactions: [{
-      amount: {
-        type: Number,
-        required: true
-      },
-      date: {
-        type: Date,
-        default: Date.now
-      },
-      description: {
-        type: String
-      },
-      category: {
-        type: String
-      },
-      walletId: {
-        type: Schema.Types.ObjectId,
-        ref: 'User.wallets' // Reference to the wallets array within the User model
-      }
-      // Add more fields as needed
-    }],
+        type: Schema.Types.Mixed // Allow any object
+      }],
     wallets: [{
       name: {
         type: String,
